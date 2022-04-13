@@ -26,5 +26,8 @@
     <ClInclude Include="atomic_mutex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="win32_mutex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

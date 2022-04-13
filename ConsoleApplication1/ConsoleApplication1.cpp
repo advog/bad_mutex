@@ -43,9 +43,9 @@ DWORD WINAPI timewaster_win32(LPVOID lpParam) {
 
 	mu->lock();
 	//printf("start thread\n");
-	std::this_thread::sleep_for(std::chrono::microseconds(100));
+	//std::this_thread::sleep_for(std::chrono::microseconds(100));
 	//printf("stop thread\n");
-	with++;
+	with+=1;
 	mu->unlock();
 	return 0;
 }
@@ -53,16 +53,16 @@ DWORD WINAPI timewaster_win32(LPVOID lpParam) {
 static int timewaster_std(int thread_id) {
 	mu2.lock();
 	//printf("start thread: %d\n", thread_id);
-	std::this_thread::sleep_for(std::chrono::microseconds(100));
+	//std::this_thread::sleep_for(std::chrono::microseconds(100));
 	//printf("stop thread: %d\n", thread_id);
-	with++;
+	with+=1;
 	mu2.unlock();
 	return 0;
 }
 
 int main()
 {
-	const int N = 1024;
+	const int N = 2048;
 
 	//WIN32 MUTEX INITIALIZATION
 	DWORD   thread_ids[N];
@@ -70,9 +70,11 @@ int main()
 	DWORD junkholder;
 
 	win32_mutex* mu4 = new win32_mutex;
-	mu4->initialize(1024);
+	mu4->initialize(N);
 	
 	//////////////////////////C++ STDLIB MUTEX///////////////////////////////
+	
+	/*
 	auto start2 = std::chrono::high_resolution_clock::now();
 
 	std::vector<std::thread> ThreadVector2;
@@ -82,7 +84,7 @@ int main()
 	auto stop2 = std::chrono::high_resolution_clock::now();
 	auto duration2= std::chrono::duration_cast<std::chrono::microseconds>(stop2 - start2);
 	printf("std_mutex duration: %d\n", duration2.count());
-
+	*/
 	/*
 
 	auto start1 = std::chrono::high_resolution_clock::now();
@@ -136,5 +138,5 @@ int main()
 
 	auto stop3 = std::chrono::high_resolution_clock::now();
 	auto duration3 = std::chrono::duration_cast<std::chrono::microseconds>(stop3 - start3);
-	printf("win32_mutex duration: %d\n", duration3.count());
+	printf("win32_mutex duration: %d with counter: %d\n", duration3.count(), with);
 }

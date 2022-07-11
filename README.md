@@ -1,3 +1,2 @@
 # bad_mutex
-Bad Homemade Mutexes
-Win32_mutex doesnt even work
+bad homemade mutexes, Win32_mutex doesnt work
